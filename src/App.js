@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { DndProvider } from 'react-dnd'
 import './App.css';
 import { Board } from './components/Board/Board'
 import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
 import { ResetButton } from './components/ResetButton/ResetButton'
+
 
 function App() {
 
   const [board, setBoard] = useState(Array(9).fill(null))
   const [xPlaying, setXPlating] = useState(true)
   const [scores, setScores] = useState({xScore: 0, oScore: 0})
+  const [roundWinner, setRoundWinner] = useState()
   const [gameOver, setGameOver] = useState(false)
   const win_conditions = [
     [0, 1, 2],
@@ -24,16 +27,17 @@ function App() {
   const handleBoxClick = (boxIdx) => {
     const updatedBoard = board.map((value, idx) => {
       if (idx === boxIdx) {
-        return xPlaying === true ? "X" : "O"
+        return xPlaying === true ? 'X' : 'O'
       } else {
         return value
       }
     })
 
     const winner = checkWinner(updatedBoard)
+    checkDraw(updatedBoard)
 
     if (winner) {
-      if (winner === "O") {
+      if (winner === 'O') {
         let {oScore} = scores
         oScore += 1
         setScores({...scores, oScore})
@@ -43,8 +47,6 @@ function App() {
         setScores({...scores, xScore})
       }
     }
-    
-
     setBoard(updatedBoard)
     setXPlating(!xPlaying)
   }
@@ -54,22 +56,32 @@ function App() {
       const [x, y, z] = win_conditions[i]
       if (board[x] && board[x] === board[y] && board[y] === board[z]) {
         setGameOver(true)
+        setRoundWinner(board[x])
         return board[x];
       }
     }
   }
 
+  const checkDraw = (board) => {
+    const draw = board.includes(null)
+    if (draw) {
+    } else {
+      setGameOver(true)
+    }
+  }
+
   const resetBoard = () => {
     setGameOver(false)
+    setRoundWinner(null)
     setBoard(Array(9).fill(null))
   }
 
   return (
-    <div className="App">
-      <ScoreBoard scores={scores} xPlaying={xPlaying} />
-      <Board board={board} onClick={gameOver ? resetBoard : handleBoxClick} />
-      <ResetButton resetBoard={resetBoard} />
-    </div>
+      <div className="App">
+        <ScoreBoard scores={scores} xPlaying={xPlaying} />
+        <Board board={board} gameOver={gameOver} onClick={handleBoxClick} />
+        <ResetButton gameOver={gameOver} roundWinner={roundWinner} resetBoard={resetBoard} />
+      </div>
   );
 }
 

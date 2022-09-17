@@ -6,9 +6,9 @@
     justify-content: space-evenly;
     width: 20rem;
     font-size: 1.5em;
-    background-color: white;
+    background-color: rgb(105, 105, 105);
     margin: 3rem auto;
-    box-shadow: 0px 0px 8px #888;
+    box-shadow: 0px 0px 8px rgb(0, 0, 0);
     border-radius: 0.5rem;
     font-weight: bold;
 }
@@ -23,6 +23,14 @@
     columns: rgb(255, 70, 37);
     border-bottom: 5px solid rgb(255, 70, 37);
     border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.red {
+    color: rgb(255, 70, 37);
+}
+
+.blue {
+    color: rgb(44, 135, 255);
 }
 
 .o-score {
