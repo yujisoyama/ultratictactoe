@@ -23,15 +23,15 @@ function App() {
     [2, 4, 6]
   ]
   const initialBoard = [
-    {id: 0, element: null, size: null},
-    {id: 1, element: null, size: null},
-    {id: 2, element: null, size: null},
-    {id: 3, element: null, size: null},
-    {id: 4, element: null, size: null},
-    {id: 5, element: null, size: null},
-    {id: 6, element: null, size: null},
-    {id: 7, element: null, size: null},
-    {id: 8, element: null, size: null}
+    {id: 0, element: null, size: 0},
+    {id: 1, element: null, size: 0},
+    {id: 2, element: null, size: 0},
+    {id: 3, element: null, size: 0},
+    {id: 4, element: null, size: 0},
+    {id: 5, element: null, size: 0},
+    {id: 6, element: null, size: 0},
+    {id: 7, element: null, size: 0},
+    {id: 8, element: null, size: 0}
   ]
   const xInitialState = [
     {id: 0, element: 'X', size: 3},
@@ -60,6 +60,7 @@ function App() {
   const [board, setBoard] = useState(initialBoard)
   const [xPieces, setXPieces] = useState(xInitialState)
   const [oPieces, setOPieces] = useState(oInitialState)
+  const [playableLargestSize, setPlayableLargestSize] = useState(null)
 
   const handlePieceClick = (boxIdx) => {
     setSelectedPiece(boxIdx)
@@ -107,9 +108,8 @@ function App() {
       })
   
       const winner = checkWinner(updatedBoard)
-      /*
       checkDraw(updatedBoard)
-      */
+
   
       if (winner) {
         if (winner === 'O') {
@@ -141,9 +141,23 @@ function App() {
   }
 
   const checkDraw = (board) => {
-    const draw = board.element.includes(null)
-    if (draw) {
-    } else {
+    const tableSizes = board.map((obj) => {
+        return obj.size
+    })
+
+    const xSizes = xPieces.map((obj) => {
+      return obj.size
+    })
+
+    const oSizes = oPieces.map((obj) => {
+      return obj.size
+    })
+
+    const tableMinSize = Math.min(...tableSizes)
+    const xMaxSize = Math.min(...xSizes)
+    const oMaxSize = Math.min(...oSizes)
+
+    if (tableMinSize >= xMaxSize && tableMinSize >= oMaxSize) {
       setGameOver(true)
     }
   }

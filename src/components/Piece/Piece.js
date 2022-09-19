@@ -15,7 +15,16 @@ export const Piece = ({ value, size, xPlaying, onClick }) => {
             style = style + 'big'
             break
     }
+    let empty = value === null ? true : false
+    let disable
+
+    if (empty) {
+        disable = true
+    } else {
+        disable = !xPlaying
+    }
+
     return (
-        <button disabled={!xPlaying} className={style} onClick={onClick}>{value}</button>
+        <button disabled={disable} className={style} onClick={onClick}>{value}</button>
     )
 }
