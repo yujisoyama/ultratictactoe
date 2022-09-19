@@ -6,3 +6,8 @@ body {
   margin: 0;
   background-color: #2e2e2e;
 }
+
+.game {
+  display: flex;
+  justify-content: center;
+}
