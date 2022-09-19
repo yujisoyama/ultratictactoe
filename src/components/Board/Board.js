@@ -2,11 +2,11 @@ import React from 'react'
 import './Board.css'
 import { Box } from '../Box/Box'
 
-export const Board = ({ board, gameOver, onClick }) => {
+export const Board = ({ board, gameOver, selectedPiece, onClick }) => {
   return (
     <div className='board'>
-        {board.map((value, idx) => {
-            return <Box value={value} onClick={() => gameOver === false && onClick(idx)} />
+        {board.map((board) => {
+            return <Box value={board.element} size={board.size} onClick={() => selectedPiece !== null && gameOver === false && onClick(board.id)} />
         })}
     </div>
   )

@@ -15,8 +15,7 @@ export const Piece = ({ value, size, xPlaying, onClick }) => {
             style = style + 'big'
             break
     }
-    console.log(style)
     return (
-        <button className={style} onClick={onClick}>{value}</button>
+        <button disabled={!xPlaying} className={style} onClick={onClick}>{value}</button>
     )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Board } from './components/Board/Board'
 import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
@@ -8,8 +8,7 @@ import { AllPieces } from './components/AllPieces/AllPieces'
 
 function App() {
 
-  const [board, setBoard] = useState(Array(9).fill(null))
-  const [xPlaying, setXPlating] = useState(true)
+  const [xPlaying, setXPlaying] = useState(true)
   const [scores, setScores] = useState({xScore: 0, oScore: 0})
   const [roundWinner, setRoundWinner] = useState()
   const [gameOver, setGameOver] = useState(false)
@@ -23,8 +22,18 @@ function App() {
     [0, 4, 8],
     [2, 4, 6]
   ]
-
-  const [xPieces, setXPieces] = useState([
+  const initialBoard = [
+    {id: 0, element: null, size: null},
+    {id: 1, element: null, size: null},
+    {id: 2, element: null, size: null},
+    {id: 3, element: null, size: null},
+    {id: 4, element: null, size: null},
+    {id: 5, element: null, size: null},
+    {id: 6, element: null, size: null},
+    {id: 7, element: null, size: null},
+    {id: 8, element: null, size: null}
+  ]
+  const xInitialState = [
     {id: 0, element: 'X', size: 3},
     {id: 1, element: 'X', size: 3},
     {id: 2, element: 'X', size: 3},
@@ -34,9 +43,8 @@ function App() {
     {id: 6, element: 'X', size: 1},
     {id: 7, element: 'X', size: 1},
     {id: 8, element: 'X', size: 1}
-  ])
-
-  const [oPieces, setOPieces] = useState([
+  ]
+  const oInitialState = [
     {id: 0, element: 'O', size: 3},
     {id: 1, element: 'O', size: 3},
     {id: 2, element: 'O', size: 3},
@@ -46,71 +54,94 @@ function App() {
     {id: 6, element: 'O', size: 1},
     {id: 7, element: 'O', size: 1},
     {id: 8, element: 'O', size: 1}
-  ])
+  ]
+  const [selectedPiece, setSelectedPiece] = useState(null)
+  const [selectedSize, setSelectedSize] = useState(null)
+  const [board, setBoard] = useState(initialBoard)
+  const [xPieces, setXPieces] = useState(xInitialState)
+  const [oPieces, setOPieces] = useState(oInitialState)
 
   const handlePieceClick = (boxIdx) => {
-    const updatedPiece = board.map((value, idx) => {
-      if (idx === boxIdx) {
-        return xPlaying === true ? 'X' : 'O'
-      } else {
-        return value
-      }
-    })
+    setSelectedPiece(boxIdx)
+    switch (true) {
+      case boxIdx < 3:
+        setSelectedSize(3)
+        break
+      case boxIdx >= 3 && boxIdx <= 5:
+        setSelectedSize(2)
+        break
+      case boxIdx >= 6:
+        setSelectedSize(1)
+        break
+    }
   }
 
   const handleBoxClick = (boxIdx) => {
-    const updatedBoard = board.map((value, idx) => {
-      if (idx === boxIdx) {
-        return xPlaying === true ? 'X' : 'O'
+    if (selectedSize > board[boxIdx].size) {
+      if (xPlaying) {
+        const updatedPieces = xPieces.map((obj) => {
+          if (obj.id === selectedPiece) {
+            return {...obj, element: null}
+          } else {
+            return obj
+          }
+        })
+        setXPieces(updatedPieces)
       } else {
-        return value
+        const updatedPieces = oPieces.map((obj) => {
+          if (obj.id === selectedPiece) {
+            return {...obj, element: null}
+          } else {
+            return obj
+          }
+        })
+        setOPieces(updatedPieces)
       }
-    })
-
-    const winner = checkWinner(updatedBoard)
-    checkDraw(updatedBoard)
-
-    if (winner) {
-      if (winner === 'O') {
-        let {oScore} = scores
-        oScore += 1
-        setScores({...scores, oScore})
-      } else {
-        let {xScore} = scores
-        xScore += 1
-        setScores({...scores, xScore})
+  
+      const updatedBoard = board.map((board) => {
+        if (board.id === boxIdx) {
+          return xPlaying === true ? {...board, element: 'X', size: selectedSize} : {...board, element: 'O', size: selectedSize}
+        } else {
+          return board
+        }
+      })
+  
+      const winner = checkWinner(updatedBoard)
+      /*
+      checkDraw(updatedBoard)
+      */
+  
+      if (winner) {
+        if (winner === 'O') {
+          let {oScore} = scores
+          oScore += 1
+          setScores({...scores, oScore})
+        } else {
+          let {xScore} = scores
+          xScore += 1
+          setScores({...scores, xScore})
+        }
       }
+      
+      setBoard(updatedBoard)
+      setXPlaying(!xPlaying)
+      setSelectedPiece(null)
     }
-    setBoard(updatedBoard)
-    setXPlating(!xPlaying)
-
-    /*
-    const newArr = xElements.map((obj) => {
-      if (obj.id === 1) {
-        return {...obj, element: null}
-      } else {
-        return obj
-      }
-    })
-    console.log(newArr)
-    setXElements(newArr)
-    console.log(xElements)
-    */
   }
 
   const checkWinner = (board) => {
     for (let i = 0; i < win_conditions.length; i++) {
       const [x, y, z] = win_conditions[i]
-      if (board[x] && board[x] === board[y] && board[y] === board[z]) {
+      if (board[x].element && board[x].element === board[y].element && board[y].element === board[z].element) {
         setGameOver(true)
-        setRoundWinner(board[x])
-        return board[x];
+        setRoundWinner(board[x].element)
+        return board[x].element;
       }
     }
   }
 
   const checkDraw = (board) => {
-    const draw = board.includes(null)
+    const draw = board.element.includes(null)
     if (draw) {
     } else {
       setGameOver(true)
@@ -120,16 +151,17 @@ function App() {
   const resetBoard = () => {
     setGameOver(false)
     setRoundWinner(null)
-    setBoard(Array(9).fill(null))
+    setBoard(initialBoard)
+    setXPieces(xInitialState)
+    setOPieces(oInitialState)
   } 
-
 
   return (
       <div>
         <ScoreBoard scores={scores} xPlaying={xPlaying} />
         <div className='game'>
           <AllPieces pieces={xPieces} gameOver={gameOver} xPlaying={xPlaying} onClick={handlePieceClick} />
-          <Board board={board} gameOver={gameOver} onClick={handleBoxClick} />
+          <Board board={board} gameOver={gameOver} selectedPiece={selectedPiece} onClick={handleBoxClick} />
           <AllPieces pieces={oPieces} gameOver={gameOver} xPlaying={!xPlaying} onClick={handlePieceClick} />
         </div>
         <ResetButton gameOver={gameOver} roundWinner={roundWinner} resetBoard={resetBoard} />
