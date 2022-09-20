@@ -4,7 +4,7 @@ import { Board } from './components/Board/Board'
 import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
 import { ResetButton } from './components/ResetButton/ResetButton'
 import { AllPieces } from './components/AllPieces/AllPieces'
-import { Timer } from './components/Timer/Timer'
+//import { Timer } from './components/Timer/Timer'
 
 
 function App() {
@@ -77,6 +77,7 @@ function App() {
       default:
         break
     }
+    checkDraw(board)
   }
 
   const handleBoxClick = (boxIdx) => {
@@ -84,7 +85,7 @@ function App() {
       if (xPlaying) {
         const updatedPieces = xPieces.map((obj) => {
           if (obj.id === selectedPiece) {
-            return {...obj, element: null}
+            return {...obj, element: null, size: null}
           } else {
             return obj
           }
@@ -93,7 +94,7 @@ function App() {
       } else {
         const updatedPieces = oPieces.map((obj) => {
           if (obj.id === selectedPiece) {
-            return {...obj, element: null}
+            return {...obj, element: null, size: null}
           } else {
             return obj
           }
@@ -110,9 +111,8 @@ function App() {
       })
   
       const winner = checkWinner(updatedBoard)
-      checkDraw(updatedBoard)
+      //checkDraw(updatedBoard)
 
-  
       if (winner) {
         if (winner === 'O') {
           let {oScore} = scores
@@ -155,10 +155,17 @@ function App() {
       return obj.size
     })
 
+    console.log(xSizes)
+    console.log(oSizes)
+    console.log(tableSizes)
+
     const tableMinSize = Math.min(...tableSizes)
     const xMaxSize = Math.max(...xSizes)
     const oMaxSize = Math.max(...oSizes)
 
+    console.log(tableMinSize)
+    console.log(xMaxSize)
+    console.log(oMaxSize)
     if (tableMinSize >= xMaxSize && tableMinSize >= oMaxSize) {
       setGameOver(true)
     }
