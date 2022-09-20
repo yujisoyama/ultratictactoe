@@ -13,6 +13,8 @@ export const Box = ({ value, size, onClick }) => {
         case 3:
             style = style + 'big'
             break
+        default:
+            break
     }
     return (
         <button className={style} onClick={onClick}>{value}</button>

@@ -7,7 +7,13 @@ body {
   background-color: #2e2e2e;
 }
 
+.main {
+  width: 100%;
+}
+
 .game {
+  width: 1300px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
 }

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { Board } from './components/Board/Board'
 import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
 import { ResetButton } from './components/ResetButton/ResetButton'
 import { AllPieces } from './components/AllPieces/AllPieces'
+import { Timer } from './components/Timer/Timer'
 
 
 function App() {
@@ -60,7 +61,6 @@ function App() {
   const [board, setBoard] = useState(initialBoard)
   const [xPieces, setXPieces] = useState(xInitialState)
   const [oPieces, setOPieces] = useState(oInitialState)
-  const [playableLargestSize, setPlayableLargestSize] = useState(null)
 
   const handlePieceClick = (boxIdx) => {
     setSelectedPiece(boxIdx)
@@ -73,6 +73,8 @@ function App() {
         break
       case boxIdx >= 6:
         setSelectedSize(1)
+        break
+      default:
         break
     }
   }
@@ -154,8 +156,8 @@ function App() {
     })
 
     const tableMinSize = Math.min(...tableSizes)
-    const xMaxSize = Math.min(...xSizes)
-    const oMaxSize = Math.min(...oSizes)
+    const xMaxSize = Math.max(...xSizes)
+    const oMaxSize = Math.max(...oSizes)
 
     if (tableMinSize >= xMaxSize && tableMinSize >= oMaxSize) {
       setGameOver(true)
@@ -171,7 +173,7 @@ function App() {
   } 
 
   return (
-      <div>
+      <div className='main'>
         <ScoreBoard scores={scores} xPlaying={xPlaying} />
         <div className='game'>
           <AllPieces pieces={xPieces} gameOver={gameOver} xPlaying={xPlaying} onClick={handlePieceClick} />

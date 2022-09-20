@@ -14,6 +14,8 @@ export const Piece = ({ value, size, xPlaying, onClick }) => {
         case 3:
             style = style + 'big'
             break
+        default:
+            break
     }
     let empty = value === null ? true : false
     let disable
