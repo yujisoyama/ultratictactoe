@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './App.css';
-import { Board } from './components/Board/Board'
+import { Info } from './components/Info/Info'
 import { ScoreBoard } from './components/ScoreBoard/ScoreBoard'
-import { ResetButton } from './components/ResetButton/ResetButton'
+import { Board } from './components/Board/Board'
 import { AllPieces } from './components/AllPieces/AllPieces'
-//import { Timer } from './components/Timer/Timer'
-
+import { ResetButton } from './components/ResetButton/ResetButton'
+import { Pass } from './components/Pass/Pass'
 
 function App() {
 
@@ -77,7 +77,6 @@ function App() {
       default:
         break
     }
-    checkDraw(board)
   }
 
   const handleBoxClick = (boxIdx) => {
@@ -111,7 +110,6 @@ function App() {
       })
   
       const winner = checkWinner(updatedBoard)
-      //checkDraw(updatedBoard)
 
       if (winner) {
         if (winner === 'O') {
@@ -171,6 +169,11 @@ function App() {
     }
   }
 
+  const passTurn = () => {
+    setXPlaying(!xPlaying)
+    checkDraw(board)
+  }
+
   const resetBoard = () => {
     setGameOver(false)
     setRoundWinner(null)
@@ -181,12 +184,14 @@ function App() {
 
   return (
       <div className='main'>
+        <Info />
         <ScoreBoard scores={scores} xPlaying={xPlaying} />
         <div className='game'>
           <AllPieces pieces={xPieces} gameOver={gameOver} xPlaying={xPlaying} onClick={handlePieceClick} />
           <Board board={board} gameOver={gameOver} selectedPiece={selectedPiece} onClick={handleBoxClick} />
           <AllPieces pieces={oPieces} gameOver={gameOver} xPlaying={!xPlaying} onClick={handlePieceClick} />
         </div>
+        <Pass gameOver={gameOver} passTurn={passTurn} />
         <ResetButton gameOver={gameOver} roundWinner={roundWinner} resetBoard={resetBoard} />
       </div>
   );

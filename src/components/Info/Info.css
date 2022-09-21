@@ -1,0 +1,103 @@
+.info {
+    width: 1300px;
+    margin: auto;
+    position: absolute;
+    top: 25px;
+    left: auto;
+}
+
+.info > p {
+    font-size: 2em;
+    width: 30px;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.616);
+}
+
+.info > p:hover {
+    font-size: 2em;
+    color: rgba(255, 255, 255, 0.856);
+}
+
+.how-to-play {
+    width: 95%;
+    height: 95%;
+    margin: auto;
+}
+
+.how-to-play > h1 {
+    margin-top: 0px;
+    color: white;
+}
+
+.how-to-play > p {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 20px;
+    text-align: justify;
+    color: rgb(255, 255, 255);
+    text-indent: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.how-to-play > p > span {
+    text-decoration: underline;
+}
+
+.overwrite-list {
+    list-style-type: square;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 20px;
+    text-align: justify;
+    color: rgb(255, 255, 255);
+    margin-top: 5px;
+}
+
+.overwrite-list > li {
+    margin-bottom: 10px;
+}
+
+.content-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    width: 45%;
+}
+
+.left {
+    width: 45%;
+}
+
+.right > p {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 20px;
+    text-align: justify;
+    color: rgb(255, 255, 255);
+    text-indent: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.left > p {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 20px;
+    text-align: justify;
+    color: rgb(255, 255, 255);
+    text-indent: 1.5em;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.img {
+    width: 60%;
+    height: 80%;
+    display: block;
+    margin: auto;
+}
+
+@media (max-width: 1400px) {
+    .info > p {
+        padding-left: 50px;
+    }
+}

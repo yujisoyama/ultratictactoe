@@ -8,6 +8,7 @@ h1 {
     color: rgb(226, 226, 226);
     text-align: center;
     vertical-align: middle;
+    margin: 1rem auto;
 }
 
 .xwinner {
@@ -29,13 +30,17 @@ h1 {
     color: rgb(226, 226, 226);
     font-size: 2rem;
     padding: 0.5rem 1rem;
-    margin: 2rem auto;
+    margin: 1.7rem auto;
     display: block;
     animation-name: updown;
     animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease;
     transition: all .3s;
+}
+
+.reset-btn:hover {
+    box-shadow: 0px 0px 15px rgb(114, 114, 114);
 }
 
 @keyframes updown {

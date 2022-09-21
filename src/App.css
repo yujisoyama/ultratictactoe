@@ -4,11 +4,13 @@
 
 body {
   margin: 0;
-  background-color: #2e2e2e;
+  background-color: rgb(46, 46, 46);
 }
 
 .main {
-  width: 100%;
+  width: 1300px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .game {
