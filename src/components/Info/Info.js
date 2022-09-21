@@ -2,7 +2,7 @@ import React from 'react'
 import './Info.css'
 import Modal from 'react-modal'
 import { useState } from 'react'
-import { AiOutlineInfoCircle, AiOutlineCloseCircle } from "react-icons/ai"
+import { AiOutlineInfoCircle } from "react-icons/ai"
 import img from './win.png'
 
 Modal.setAppElement('#root')
@@ -39,7 +39,7 @@ export const Info = () => {
             <div className='how-to-play'>
                 <h1>How to play</h1>
                 <p>Each player has 9 pieces with different strengths (3 - Large, 3 - Medium, 3 - Small). In your turn, put a piece (of your choice) in the central board to make your move.</p>
-                <p>In your move, you the three possibilities: put any piece in a empty cell, pass your turn or <span>overwrite</span> a piece in the central board accordingly to their strengths:</p>
+                <p>In your move, you have three possibilities: put any piece in a empty cell, pass your turn or <span>overwrite</span> a piece in the central board accordingly to their strengths:</p>
                 <div className="content-info">
                     <div className="right">
                         <ul className='overwrite-list'>
@@ -51,8 +51,8 @@ export const Info = () => {
                         <p>If the central board no longer has empty cells and your leftover pieces cannot overwrite anymore, your only choice is to pass the turn.</p>
                     </div>
                     <div className="left">
-                        <p>And finally, just like a normal tic-tac-toe, the first to line up three elements wins!</p>
-                        <img src={img} className='img' />
+                        <p>And finally, just like a normal tic-tac-toe, the first to line up three elements wins! Have fun!!</p>
+                        <img src={img} className='img' alt='win'/>
                     </div>
                 </div>
             </div>
