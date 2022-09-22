@@ -49,6 +49,7 @@ export const Info = () => {
                         </ul>
                         <p>You can overwrite your own piece in the board to increase its strength, to prevent its replacement by your opponent.</p>
                         <p>If the central board no longer has empty cells and your leftover pieces cannot overwrite anymore, your only choice is to pass the turn.</p>
+                        <p>Play in a device with a resolution at least 1300x700 for a better experience.</p>
                     </div>
                     <div className="left">
                         <p>And finally, just like a normal tic-tac-toe, the first to line up three elements wins! Have fun!!</p>
